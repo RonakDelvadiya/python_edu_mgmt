@@ -1,7 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
-
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
@@ -12,14 +9,9 @@ from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User,UserManager
 from rest_framework.authtoken import views as tokenView
 from django.db.models import *
-
 import string
 from random import randint
 import datetime
-
-
-
-
 
 
 # 1)User Register Api (url:/api/register/)
@@ -52,7 +44,6 @@ def university_list(request):
 	return Response(serializer.data, status=status.HTTP_200_OK)
    
 
-
 #4) Create new School of particular logged in user (url:/api/school/add/)
 @csrf_exempt
 @api_view(['POST'])
@@ -72,7 +63,6 @@ def school_create(request):
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 	else:
 		return Response({'error': 'You are not authenticated'}, status=status.HTTP_200_OK)
-
 
 
 #5) API to get all schools of logged in user (url:/api/school/list/)
@@ -169,18 +159,13 @@ def student_create(request):
 	add=request.data['address']
 	cityname=Address.city 
 	fulladdress=Address.objects.all().filter(address__id=add)
-
-	print fulladdress
 	data=request.data
 	data['SMARTnumber']=finalstr
 	serializer = StudentSmartSerializer(data=data)
 	if serializer.is_valid():
 		serializer.save()
 		return Response({'Smart_number' : finalstr,'Data' : serializer.data }, status=status.HTTP_201_CREATED)
-		#return Response(serializer.data, status=status.HTTP_201_CREATED)
 	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 #11) API to DELETE university by id (also delete related all the school & student records)(url: /api/university/delete/{id})
@@ -193,4 +178,3 @@ def university_delete(request, pk):
 		return Response({'error': 'University id not found'}, status=status.HTTP_400_BAD_REQUEST)
 	university.delete()
 	return Response({'success': 'University,school,student deleted successfully'}, status=status.HTTP_200_OK)
-    
