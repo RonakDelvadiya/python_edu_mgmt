@@ -13,17 +13,14 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 # model University
 class University(models.Model):
-    
     name = models.CharField(verbose_name="University",max_length = 100)
     website = models.CharField("Website",max_length=50,null=True,blank=True)
-    #logo = models.ImageField(verbose_name="Logo",max_length = 255,upload_to="media/")
     is_active = models.BooleanField("Is active",default=True)
     created_at = models.DateTimeField(auto_now_add=True,default=timezone.now)
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
 	    return self.name
-
 
 #model School
 class School(models.Model):
@@ -40,10 +37,8 @@ class School(models.Model):
     def __str__(self):
 	    return self.name
 
-
 #model Address
 class Address(models.Model):
-
     COUNTRY = (
         ('india',  'India'),
         ('uk',  'UK'),
@@ -60,7 +55,6 @@ class Address(models.Model):
     mobile = models.IntegerField(verbose_name="Mobile",unique=True,max_length=13,null=True,blank=True)
 
     def __str__(self):
-        # return self.street_1 +","+ self.street_2 +","+ self.city +","+ self.state +","+ self.country +"-"+ self.zipcode
         return "--->  "+self.street_1 +" , "+ self.street_2 +" , "+ self.city + " , "+self.state
 
 
